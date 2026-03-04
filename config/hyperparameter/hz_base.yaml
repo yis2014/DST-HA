@@ -1,0 +1,46 @@
+# DST_HA 超参影响实验 - 基础配置
+# 所有超参数实验的默认配置，其他实验基于此修改单个参数
+#
+loader: 'hz'
+dataset:
+  root: 'data/hangzhou'
+  batch_size: 32
+  num_workers: 0
+
+model:
+  num_rnn_layers: 2        # 默认RNN层数
+  num_input_dim: 2
+  num_rnn_units: 128       # 默认隐藏单元数
+  num_nodes: 80
+  num_extra_embedding: [73, 2]
+  n_heads: 8               # 默认注意力头数
+  ffn_dim: 128
+  st_layers: 1             # 默认空间注意力层数
+  st_dropout_rate: 0.2     # 默认dropout率
+  output_attention: False
+  use_curriculum_learning: True
+  cl_decay_steps: 200      # 默认课程学习衰减步数
+  use_input: True
+  # 完整模型配置
+  use_global: True
+  only_global: False
+  use_dynamic_gate: True
+  use_context: True
+
+train:
+  epoch: 200               # 统一训练轮数
+  load_param: None
+  base_lr: 0.001           # 默认学习率
+  epsilon: 1.0e-8
+  weight_decay: 0.0
+  steps: [100, 150, 175]
+  lr_decay_ratio: 0.1
+  min_learning_rate: 1.0e-06
+  warm_up: True
+  warm_up_ep: 10
+  warm_up_lr: 0.0001
+  max_grad_norm: 5
+  save_every_n_epochs: 100
+  horizon_tau: 6.0
+
+device: 'cuda' 

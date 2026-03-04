@@ -1,0 +1,47 @@
+# DST_HA 杭州数据集配置文件
+# 
+# 消融实验配置：
+# 1. Full Model (原始): 所有开关保持 True
+# 2. -HSA (去除分层空间注意力): use_global: False
+# 3. -Gate (去除自适应门控): use_dynamic_gate: False
+# 4. -CA-GRU (去除上下文感知): use_dynamic_gate: False
+# 5. -Curriculum (去除课程学习): use_curriculum_learning: False
+#
+loader: 'hz'
+dataset:
+  root: 'data/hangzhou'
+  batch_size: 32
+  num_workers: 0
+
+model:
+  num_rnn_layers: 2
+  num_input_dim: 2
+  num_rnn_units: 128
+  num_nodes: 80
+  num_extra_embedding: [73, 2]
+  n_heads: 8
+  ffn_dim: 128
+  st_layers: 1
+  st_dropout_rate: 0.2
+  output_attention: False
+  use_curriculum_learning: True
+  cl_decay_steps: 200
+  use_input: True
+  # 消融实验开关
+  use_global: True          # 分层空间注意力的全局分支
+  use_dynamic_gate: True    # CA-GRU的外部上下文注入
+
+train:
+  epoch: 200
+  load_param: None
+  base_lr: 0.001
+  epsilon: 1.0e-8
+  weight_decay: 0.0
+  steps: [100, 150, 175]
+  lr_decay_ratio: 0.1
+  min_learning_rate: 1.0e-06
+  warm_up: True
+  warm_up_ep: 10
+  warm_up_lr: 0.0001
+  max_grad_norm: 5
+  save_every_n_epochs: 100

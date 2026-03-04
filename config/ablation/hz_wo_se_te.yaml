@@ -1,0 +1,47 @@
+# DST_HA 消融实验配置文件 - w.o SE&TE
+# 实验组2：关闭Local+Context，验证全局分支单独效果
+# HSA-Local(SE): ✗, CA-GRU外部上下文(TE): ✗, HSA-Global(HT): ✓
+#
+loader: 'hz'
+dataset:
+  root: 'data/hangzhou'
+  batch_size: 32
+  num_workers: 0
+
+model:
+  num_rnn_layers: 2
+  num_input_dim: 2
+  num_rnn_units: 128
+  num_nodes: 80
+  num_extra_embedding: [73, 2]
+  n_heads: 8
+  ffn_dim: 128
+  st_layers: 1
+  st_dropout_rate: 0.2
+  output_attention: False
+  use_curriculum_learning: True
+  cl_decay_steps: 200
+  use_input: True
+  # 仅保留全局分支
+  use_global: True          # ✓ HSA-Global(HT): 保留全局分支
+  only_global: True         # ✓ 只使用全局（关闭局部分支）
+  use_dynamic_gate: False   # ✗ CA-GRU外部上下文注入(TE): 关闭
+  use_context: False        # ✗ 外部上下文信息
+
+train:
+  epoch: 200
+  load_param: None
+  base_lr: 0.001
+  epsilon: 1.0e-8
+  weight_decay: 0.0
+  steps: [100, 150, 175]
+  lr_decay_ratio: 0.1
+  min_learning_rate: 1.0e-06
+  warm_up: True
+  warm_up_ep: 10
+  warm_up_lr: 0.0001
+  max_grad_norm: 5
+  save_every_n_epochs: 100
+  horizon_tau: 6.0          # 加权MAE的衰减参数
+
+device: 'cuda' 
