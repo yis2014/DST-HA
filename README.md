@@ -26,8 +26,8 @@ pip install -r requirements.txt
 ### 2. 数据获取与放置
 
 - 数据集（dataset.zip）：
-  - 链接: https://pan.baidu.com/s/15jxJAIkTCSJA55wWdmkDnw
-  - 提取码: 18d5
+  - 链接: [https://pan.baidu.com/s/15jxJAIkTCSJA55wWdmkDnw](https://pan.baidu.com/s/1Ukn5JTAx0rOyRtCawlv58g?pwd=1hqa)
+  - 提取码: 1hqa
 - 解压后将 data 目录置于项目根目录，使结构包含：
 
 ```
